@@ -8,8 +8,8 @@ from tabulate import tabulate
 import xml_helpers as xh
 
 # Check if the CSV file exists
-csv_file = "openlogo_data.csv"
-xml_dir = r"C:\Users\CAS\Downloads\openlogo\Annotations"
+csv_file = os.path.join("..", "data", "openlogo_data.csv")
+xml_dir = os.path.join("..", "data", "openlogo", "Annotations")
 if os.path.exists(csv_file):
     # Load the parsed data from the CSV file
     data = pd.read_csv(csv_file)
@@ -34,8 +34,8 @@ print(top_5_names)
 # print(tabulate(data.head(10), headers='keys', tablefmt='grid'))
                 
 # let's move the images to the corresponding subfolders
-image_dir = r"C:\Users\CAS\Downloads\openlogo\JPEGImages"
+image_dir = os.path.join("..", "data", "openlogo", "JPEGImages")
 
 # Move images and annotations for the top 5 labels
 for label in tqdm(top_5_names.index, desc="Moving images and annotations by labels"):
-    xh.move_images_by_labels(data, xml_dir, image_dir, {label: label})
+    xh.move_images_by_labels(data, xml_dir, image_dir, {label: label}, subfolder='..\data\top5')
